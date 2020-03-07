@@ -4,16 +4,14 @@ import '../index.css';
 import {Square} from './Square.js';
 import {initialiseChessBoard} from '../helpers/intialise-chess'
 
-export function Board() {
-
-    const squares = initialiseChessBoard();
+export function Board(props) {
 
   const renderSquare = (i, squareShade) => {
     return <Square 
-    piece = {squares[i]} 
-    style = {squares[i]? squares[i].pieceInfo.style : null}
+    piece = {props.squares[i]} 
+    style = {props.squares[i]? props.squares[i].pieceInfo.style : null}
     shade = {squareShade}
-    onClick={() => this.props.onClick(i)}
+    onClick={() => props.onClick(i)}
     />
   };
 

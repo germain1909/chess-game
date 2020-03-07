@@ -67,6 +67,10 @@ background-color: RGB(187,190,100);
     background-color: RGB(234,240,206);
 }
 
+.light-square{
+  background-color: RGB(234,240,206);
+}
+
 #player-turn-box{
   width: 32px;
   height: 32px;
