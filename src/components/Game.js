@@ -15,7 +15,7 @@ export default function Game(){
   const handleClick = (i)=>{
     
     let squares = state.squares.slice();
-    squares[i].pieceInfo.style= { ...state.squares[i].pieceInfo.style,backgroundColor:'Green'}
+    squares[i].pieceInfo.style= { ...state.squares[i].pieceInfo.style,backgroundColor:"RGB(213,183,232)"}
     setState({squares:squares});
     console.log(squares[i].pieceInfo.style);
   }
