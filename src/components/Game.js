@@ -40,25 +40,31 @@ export default function Game(){
 
     else if(state.sourceSelection > -1)
     {
-      squares[i].pieceInfo.style= { ...state.squares[i].pieceInfo.style,backgroundColor:"RGB(213,183,232)"};
+      squares[state.sourceSelection].pieceInfo.style= { ...state.squares[state.sourceSelection].pieceInfo.style,backgroundColor:null};
+      sourceSelection = -1;
 
     }
 
     //when you call set state if you dont spread through your state it will get set to undefined
-    setState({...state,squares:squares,status:status});
+    setState({...state,squares:squares,status:status,sourceSelection:sourceSelection});
    
 
     
   }
 
   return(
-      <div className="game-board">
-  <p>{`${state.status}`}</p>      
-  <Board 
-  squares = {state.squares}
-  onClick = {(i) => handleClick(i)}
-  />
-</div>)
+    <div>
+      <div className="game-board">      
+        <Board 
+          squares = {state.squares}
+          onClick = {(i) => handleClick(i)}
+        />
+      </div>
+      <div className="game-info">
+          <p>{`${state.status}`}</p>
+      </div>
+     </div> 
+)
 }
 
 
