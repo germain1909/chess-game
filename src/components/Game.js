@@ -18,8 +18,10 @@ export default function Game(){
     let status = '';
     let sourceSelection = 0;
 
+    //source selection is the i  of the previous piece selecte or or -1 if no piece is previously selected
     if(state.sourceSelection === -1)
     {
+      //if the first piece you clicked is null or the first piece you clicked is not of the same player as who's turn it is 
       if( !squares[i] || squares[i].player !== state.player)
       {
        
@@ -40,8 +42,29 @@ export default function Game(){
 
     else if(state.sourceSelection > -1)
     {
-      squares[state.sourceSelection].pieceInfo.style= { ...state.squares[state.sourceSelection].pieceInfo.style,backgroundColor:null};
-      sourceSelection = -1;
+      //if the space for your second piece has a piece and its of the same color of who's turn it is 
+      if(squares[i] && squares[i].pieceInfo.player === state.player)
+      {
+        console.log(squares[i] );
+        squares[state.sourceSelection].pieceInfo.style= { ...state.squares[state.sourceSelection].pieceInfo.style,backgroundColor:null};
+        status = "Wrong selection. Choose valid source and destination again.";
+        sourceSelection = -1;
+      }
+      else
+      {
+        //const squares = this.state.squares.slice();
+        const isDestEnemyOccupied = squares[i]? true : false; 
+        const isMovePossible = squares[state.sourceSelection].isMovePossible(state.sourceSelection, i, isDestEnemyOccupied);
+        const srcToDestPath = squares[state.sourceSelection].getSrcToDestPath(state.sourceSelection, i);
+        const isMoveLegal = getIsMoveLegal(srcToDestPath);
+
+        //actually move a pice
+        squares[i] = squares[state.sourceSelection];
+
+      }
+     
+      
+      
 
     }
 
@@ -50,6 +73,16 @@ export default function Game(){
    
 
     
+  }
+
+  const getIsMoveLegal = (srcToDestPath) =>{
+    let isLegal = true;
+    for(let i = 0; i < srcToDestPath.length; i++){
+      if(state.squares[srcToDestPath[i]] !== null){
+        isLegal = false;
+      }
+    }
+    return isLegal;
   }
 
   return(
