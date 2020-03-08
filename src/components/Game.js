@@ -15,9 +15,34 @@ export default function Game(){
   const handleClick = (i)=>{
     
     let squares = state.squares.slice();
-    squares[i].pieceInfo.style= { ...state.squares[i].pieceInfo.style,backgroundColor:"RGB(213,183,232)"}
-    setState({squares:squares});
-    console.log(squares[i].pieceInfo.style);
+    console.log(state.sourceSelection);
+    if(state.sourceSelection === -1)
+    {
+      if( !squares[i] || squares[i].player !== state.player)
+      {
+        console.log(squares[i]);
+      }
+      else
+      {
+        squares[i].pieceInfo.style= { ...state.squares[i].pieceInfo.style,backgroundColor:"RGB(213,183,232)"};
+      }
+      
+
+
+        
+    }
+
+    else if(state.sourceSelection > -1)
+    {
+      squares[i].pieceInfo.style= { ...state.squares[i].pieceInfo.style,backgroundColor:"RGB(213,183,232)"}
+
+    }
+
+    //when you call set state if you dont spread through your state it will get set to undefined
+    setState({...state,squares:squares});
+   
+
+    
   }
 
   return(
@@ -28,3 +53,5 @@ export default function Game(){
   />
 </div>)
 }
+
+
