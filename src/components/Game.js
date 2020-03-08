@@ -59,16 +59,31 @@ export default function Game(){
         const srcToDestPath = squares[state.sourceSelection].getSrcToDestPath(state.sourceSelection, i);
         const isMoveLegal = getIsMoveLegal(srcToDestPath);
 
-        //actually move a piece
-        squares[i] = squares[state.sourceSelection];
-        squares[state.sourceSelection].pieceInfo.style= { ...state.squares[state.sourceSelection].pieceInfo.style,backgroundColor:null};
-        //null out piece previous location
-        squares[state.sourceSelection] = null;
-        //Alternate player & alternate turn
-        player = state.player === 1? 2: 1;
-        turn = state.turn === 'white'? 'black' : 'white';
-        sourceSelection = -1;
-        
+        //Check if moves are valid logic
+        if(isMovePossible && isMoveLegal){
+          if(squares[i] !== null){
+            if(squares[i].player === 1){
+              //whiteFallenSoldiers.push(squares[i]);
+            }
+            else{
+              //blackFallenSoldiers.push(squares[i]);
+            }
+          }
+
+          //actually move a piece
+          squares[i] = squares[state.sourceSelection];
+          squares[state.sourceSelection].pieceInfo.style= { ...state.squares[state.sourceSelection].pieceInfo.style,backgroundColor:null};
+          //null out piece previous location
+          squares[state.sourceSelection] = null;
+          //Alternate player & alternate turn
+          player = state.player === 1? 2: 1;
+          turn = state.turn === 'white'? 'black' : 'white';
+          sourceSelection = -1;
+          }
+        else
+        {
+          status = "Not a valid move for that piece";
+        }
        
    
 
