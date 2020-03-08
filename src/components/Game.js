@@ -16,7 +16,9 @@ export default function Game(){
     
     let squares = state.squares.slice();
     let status = '';
-    let sourceSelection = 0;
+    let sourceSelection = state.sourceSelection;
+    let player = state.player;
+    let turn = state.turn;
 
     //source selection is the i  of the previous piece selecte or or -1 if no piece is previously selected
     if(state.sourceSelection === -1)
@@ -25,7 +27,7 @@ export default function Game(){
       if( !squares[i] || squares[i].player !== state.player)
       {
        
-        status = "You clicked in a bad spot";
+        status = "Wrong selection. Choose player " + state.player + " pieces.";
         console.log(state.status);
       }
       else
@@ -52,14 +54,23 @@ export default function Game(){
       }
       else
       {
-        //const squares = this.state.squares.slice();
         const isDestEnemyOccupied = squares[i]? true : false; 
         const isMovePossible = squares[state.sourceSelection].isMovePossible(state.sourceSelection, i, isDestEnemyOccupied);
         const srcToDestPath = squares[state.sourceSelection].getSrcToDestPath(state.sourceSelection, i);
         const isMoveLegal = getIsMoveLegal(srcToDestPath);
 
-        //actually move a pice
+        //actually move a piece
         squares[i] = squares[state.sourceSelection];
+        squares[state.sourceSelection].pieceInfo.style= { ...state.squares[state.sourceSelection].pieceInfo.style,backgroundColor:null};
+        //null out piece previous location
+        squares[state.sourceSelection] = null;
+        //Alternate player & alternate turn
+        player = state.player === 1? 2: 1;
+        turn = state.turn === 'white'? 'black' : 'white';
+        sourceSelection = -1;
+        
+       
+   
 
       }
      
@@ -69,7 +80,8 @@ export default function Game(){
     }
 
     //when you call set state if you dont spread through your state it will get set to undefined
-    setState({...state,squares:squares,status:status,sourceSelection:sourceSelection});
+    //setState({...state,squares:squares,status:status,sourceSelection:sourceSelection});
+    setState({...state,squares:squares,status:status,sourceSelection:sourceSelection,player: player,turn: turn});
    
 
     
