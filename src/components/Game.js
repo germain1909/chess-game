@@ -15,16 +15,22 @@ export default function Game(){
   const handleClick = (i)=>{
     
     let squares = state.squares.slice();
-    console.log(state.sourceSelection);
+    let status = '';
+    let sourceSelection = 0;
+
     if(state.sourceSelection === -1)
     {
       if( !squares[i] || squares[i].player !== state.player)
       {
-        console.log(squares[i]);
+       
+        status = "You clicked in a bad spot";
+        console.log(state.status);
       }
       else
       {
         squares[i].pieceInfo.style= { ...state.squares[i].pieceInfo.style,backgroundColor:"RGB(213,183,232)"};
+        status = "Choose destination for the selected piece";
+        sourceSelection = i;
       }
       
 
@@ -34,12 +40,12 @@ export default function Game(){
 
     else if(state.sourceSelection > -1)
     {
-      squares[i].pieceInfo.style= { ...state.squares[i].pieceInfo.style,backgroundColor:"RGB(213,183,232)"}
+      squares[i].pieceInfo.style= { ...state.squares[i].pieceInfo.style,backgroundColor:"RGB(213,183,232)"};
 
     }
 
     //when you call set state if you dont spread through your state it will get set to undefined
-    setState({...state,squares:squares});
+    setState({...state,squares:squares,status:status});
    
 
     
@@ -47,6 +53,7 @@ export default function Game(){
 
   return(
       <div className="game-board">
+  <p>{`${state.status}`}</p>      
   <Board 
   squares = {state.squares}
   onClick = {(i) => handleClick(i)}
