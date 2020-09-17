@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import '../index.css';
 import {Board} from './Board.js';
 import {initialiseChessBoard} from '../helpers/intialise-chess'
+import {FallenSoldiers} from './FallenSoldiers'
 
 export default function Game(){
  const  [state,setState] = useState({
@@ -12,6 +13,11 @@ export default function Game(){
   turn: 'white'
 });
 
+  const [fallenSoldiers,updateFallenSoldiers] = useState({
+    whiteFallenSoldiers:[],
+    blackFallenSoldiers:[]
+  })
+
   const handleClick = (i)=>{
     
     let squares = state.squares.slice();
@@ -19,6 +25,8 @@ export default function Game(){
     let sourceSelection = state.sourceSelection;
     let player = state.player;
     let turn = state.turn;
+    let blackFallenSoldiers = fallenSoldiers.blackFallenSoldiers;
+    let whiteFallenSoldiers = fallenSoldier.whiteFallenSoldiers;
 
     //source selection is the i  of the previous piece selecte or or -1 if no piece is previously selected
     if(state.sourceSelection === -1)
@@ -64,9 +72,12 @@ export default function Game(){
           if(squares[i] !== null){
             if(squares[i].player === 1){
               //whiteFallenSoldiers.push(squares[i]);
+              whiteFallenSoldiers.push(squares[i]);
+
             }
             else{
               //blackFallenSoldiers.push(squares[i]);
+              blackFallenSoldiers.push(squares[i]);
             }
           }
 
@@ -119,6 +130,10 @@ export default function Game(){
           squares = {state.squares}
           onClick = {(i) => handleClick(i)}
         />
+      </div>
+      <div>
+        <p>Fallen Soldiers</p>
+        <FallenSoldiers whiteFallenSoldiers={whiteFallenSoldiers} blackFallenSoldiers={blackFallenSoldiers}/>
       </div>
       <div className="game-info">
           <p>{`${state.status}`}</p>
