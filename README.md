@@ -1,5 +1,11 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+This is a fun chess game built by Germain Burchfield starting with create-react-app.
+To play the game do 
+
+### `npm install`
+### `npm start`
+
+then go to http://localhost:3000) to view it in the browser
 ## Available Scripts
 
 In the project directory, you can run:
